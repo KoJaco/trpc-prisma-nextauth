@@ -7,6 +7,7 @@ import {
 } from "~/server/api/trpc";
 
 export const exampleRouter = createTRPCRouter({
+  // call without auth
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input }) => {
@@ -19,6 +20,7 @@ export const exampleRouter = createTRPCRouter({
     return ctx.prisma.example.findMany();
   }),
 
+  // protected, auth req
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
